@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -18,7 +19,7 @@ class AutoComplectionImplTest {
 	 *  Sometimes this test fails.
 	 *  10000 isn't enough, I hope 1000000 is good.
 	 */
-	private static final int COUNT = 10000;
+	private static final int COUNT = 30000;
 	
 	AutoCompletion autoCompl;
 	String[] arrStr = { "first word", "new second word", "newword", "third word", "thirdword", "newBird", "sec",
@@ -27,7 +28,7 @@ class AutoComplectionImplTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		autoCompl = new AutoComplectionImpl();
+		autoCompl = new AutoComplectionImpl(new HashSet<>(listStr));
 		fill(autoCompl);
 	}
 
@@ -46,7 +47,7 @@ class AutoComplectionImplTest {
 
 	@Test
 	void testRemoveWord() {
-		AutoCompletion autoComplEmpty = new AutoComplectionImpl();
+		AutoCompletion autoComplEmpty = new AutoComplectionImpl(new ArrayList<>());
 		//removing word from empty AutoComplection
 		assertFalse(autoComplEmpty.removeWord("word"));
 		//removing word
@@ -59,10 +60,8 @@ class AutoComplectionImplTest {
 	void testGetCompletionOptions() {
 		Iterable<String> iter = autoCompl.getCompletionOptions("word");
 		iter.forEach(str -> assertTrue(str.startsWith("word")));
-		Iterable<String> iterEmpty = autoCompl.getCompletionOptions("99");
-		List<String> empty = new ArrayList<>();
-		iterEmpty.forEach(empty::add);
-		assertEquals(0, empty.size());
+		Collection<String> iterEmpty = (Collection<String>) autoCompl.getCompletionOptions("99");
+		assertEquals(0, iterEmpty.size());
 		//
 		performanceTest();
 	}
@@ -93,7 +92,7 @@ class AutoComplectionImplTest {
 	}
 
 	private String createRandomString() {
-		String symbols = "abcdef";
+		String symbols = "abcdefghijk";
 	    char[] array = symbols.toCharArray();
 	    ArrayList<String> arrStr = new ArrayList<>();
 	    for (int i = 0; i < array.length; i++) {
