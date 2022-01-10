@@ -15,15 +15,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class AutoComplectionImplTest {
-<<<<<<< HEAD
-	/* V.R.
-	 *  Sometimes this test fails.
-	 *  10000 isn't enough, I hope 1000000 is good.
-	 */
-	private static final int COUNT = 30000;
-=======
-	private static final int COUNT = 100000;
->>>>>>> refs/heads/master
+
+	private static final int COUNT = 1000000;
+
 	
 	AutoCompletion autoCompl;
 	String[] arrStr = { "first word", "new second word", "newword", "third word", "thirdword", "newBird", "sec",
