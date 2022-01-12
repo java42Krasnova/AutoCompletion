@@ -9,6 +9,7 @@ public class AutoComplectionImpl implements AutoCompletion {
 	private AutoComplectionImpl() {
 	}
 	public AutoComplectionImpl(Collection<String> coll) {
+		//[YG] collection is an encapsulation. Getting encapsulated collection from outside is not acceptable
 		this.strCollection = coll;
 	}
 	@Override
@@ -25,6 +26,7 @@ public class AutoComplectionImpl implements AutoCompletion {
 	@Override
 	public Iterable<String> getCompletionOptions(String prefix) {
 		List<String> listOfWordsStartsWith = new ArrayList<>();
+		//[YG] no matter of collection forEach will give O[N]
 		if (!strCollection.isEmpty()) {
 			strCollection.forEach(word -> {
 				if (word.startsWith(prefix)) 
